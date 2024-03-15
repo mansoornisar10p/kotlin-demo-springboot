@@ -1,4 +1,4 @@
-package com.codesession.demo.demo.utils
+package com.codesession.demo.demo.commons
 
 import com.codesession.demo.demo.feature_todo.model.TodoTask
 import javax.persistence.criteria.CriteriaBuilder

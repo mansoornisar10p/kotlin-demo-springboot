@@ -5,8 +5,8 @@ import com.codesession.demo.demo.feature_todo.extensions.findAllWithPredicate
 import com.codesession.demo.demo.feature_todo.extensions.findAllWithSorting
 import com.codesession.demo.demo.feature_todo.model.TodoTask
 import com.codesession.demo.demo.feature_todo.repository.TodoTaskRepository
-import com.codesession.demo.demo.utils.createCompletedPredicate
-import com.codesession.demo.demo.utils.nonNull
+import com.codesession.demo.demo.commons.createCompletedPredicate
+import com.codesession.demo.demo.commons.nonNull
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Sort
 import org.springframework.stereotype.Service
