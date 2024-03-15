@@ -1,13 +1,13 @@
-package com.codesession.demo.demo.feature_todo.impl
+package com.codesession.demo.demo.feature_todo.service
 
 import com.codesession.demo.demo.feature_todo.extensions.countWithPredicate
 import com.codesession.demo.demo.feature_todo.extensions.findAllWithPredicate
 import com.codesession.demo.demo.feature_todo.extensions.findAllWithSorting
 import com.codesession.demo.demo.feature_todo.model.TodoTask
 import com.codesession.demo.demo.feature_todo.repository.TodoTaskRepository
-import com.codesession.demo.demo.feature_todo.service.TodoTaskService
 import com.codesession.demo.demo.utils.createCompletedPredicate
 import com.codesession.demo.demo.utils.nonNull
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Sort
 import org.springframework.stereotype.Service
 import javax.persistence.EntityManager
@@ -17,12 +17,12 @@ import javax.persistence.criteria.Predicate
 import javax.persistence.criteria.Root
 
 @Service
-class TodoTaskServiceImpl(
+class TodoTaskServiceImpl @Autowired constructor(
     private val repository: TodoTaskRepository,
     private val entityManager: EntityManager
-) : TodoTaskService {
+) {
 
-    override fun getAllTasks(sortBy: String?, filterBy: String?): List<TodoTask> {
+    fun getAllTasks(sortBy: String?, filterBy: String?): List<TodoTask> {
         val sort = sortBy?.let { Sort.by(it) } ?: Sort.by("id")
         val predicate = filterBy?.let { parseFilter(it) }
 
@@ -32,7 +32,7 @@ class TodoTaskServiceImpl(
         return repository.findAllWithSorting(sort)
     }
 
-    override fun countTasks(filterBy: String?): Long {
+    fun countTasks(filterBy: String?): Long {
         val predicate = filterBy?.let { parseFilter(it) }
         predicate.nonNull {
             return entityManager.countWithPredicate(this)
@@ -40,11 +40,11 @@ class TodoTaskServiceImpl(
         return repository.count()
     }
 
-    override fun getTaskById(id: Long): TodoTask? = repository.findById(id).orElse(null)
+    fun getTaskById(id: Long): TodoTask? = repository.findById(id).orElse(null)
 
-    override fun save(task: TodoTask) = repository.save(task)
+    fun save(task: TodoTask) = repository.save(task)
 
-    override fun deleteById(id: Long) = repository.deleteById(id)
+    fun deleteById(id: Long) = repository.deleteById(id)
 
 
     private fun parseFilter(filter: String): Predicate? {

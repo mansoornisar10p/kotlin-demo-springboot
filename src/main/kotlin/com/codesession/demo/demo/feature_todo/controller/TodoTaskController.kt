@@ -1,12 +1,12 @@
 package com.codesession.demo.demo.feature_todo.controller
 
+import com.codesession.demo.demo.feature_todo.service.TodoTaskServiceImpl
 import com.codesession.demo.demo.feature_todo.model.TodoTask
-import com.codesession.demo.demo.feature_todo.service.TodoTaskService
 import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/api/tasks")
-class TodoTaskController(private val service: TodoTaskService) {
+class TodoTaskController(private val service: TodoTaskServiceImpl) {
 
     @GetMapping
     fun getAllTasks(
