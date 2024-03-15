@@ -1,5 +1,6 @@
 package com.codesession.demo.demo.feature_checklist.controller
 
+import com.codesession.demo.demo.commons.Result
 import com.codesession.demo.demo.feature_checklist.model.Checklist
 import com.codesession.demo.demo.feature_checklist.service.ChecklistService
 import org.springframework.beans.factory.annotation.Autowired
@@ -13,10 +14,10 @@ class ChecklistController @Autowired constructor(private val checklistService: C
     fun getAllChecklists(): List<Checklist> = checklistService.allChecklists
 
     @PostMapping
-    fun createChecklist(@RequestBody checklist: Checklist): Checklist = checklistService.createChecklist(checklist)
+    fun createChecklist(@RequestBody checklist: Checklist): Result<Checklist>? = checklistService.createChecklist(checklist)
 
     @PutMapping("/{id}")
-    fun updateChecklist(@PathVariable id: Long, @RequestBody checklist: Checklist): Checklist {
+    fun updateChecklist(@PathVariable id: Long, @RequestBody checklist: Checklist): Result<Checklist>? {
         require(id == checklist.id) { "ID mismatch" }
         return checklistService.updateChecklist(id, checklist)
     }
