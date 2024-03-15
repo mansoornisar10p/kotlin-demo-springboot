@@ -1,3 +1,5 @@
+import com.sun.tools.javac.jvm.PoolConstant.LoadableConstant.Int
+
 fun structuralEquality() {
     val a: Int = 5
     val b: Int = 5
@@ -8,12 +10,11 @@ fun structuralEquality() {
 
 
 fun referentialEquality() {
-    val x = Integer(10)
-    val y = Integer(10)
+    val x = Int(10)
+    val y = Int(10)
     val z = x
     println(x === y) // false
     println(x === z) // true
-
 }
 
 fun main() {
