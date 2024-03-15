@@ -10,16 +10,16 @@ fun TodoTaskRepository.findAllWithSorting(sort: Sort): List<TodoTask> {
     return this.findAll(sort)
 }
 
-fun EntityManager.findAllWithPredicate(predicate: Predicate): List<TodoTask> {
+fun EntityManager.findAllWithPredicate(predicate: Predicate): Result<List<TodoTask>> {
     val criteriaQuery = criteriaBuilder.createQuery(TodoTask::class.java)
     val root = criteriaQuery.from(TodoTask::class.java)
     criteriaQuery.select(root).where(predicate)
-    return createQuery(criteriaQuery).resultList
+    return Result.success(createQuery(criteriaQuery).resultList)
 }
 
-fun EntityManager.countWithPredicate(predicate: Predicate): Long {
+fun EntityManager.countWithPredicate(predicate: Predicate): Result<Long> {
     val criteriaQuery = criteriaBuilder.createQuery(Long::class.java)
     val root = criteriaQuery.from(TodoTask::class.java)
     criteriaQuery.select(criteriaBuilder.count(root)).where(predicate)
-    return createQuery(criteriaQuery).singleResult
+    return Result.success(createQuery(criteriaQuery).singleResult)
 }

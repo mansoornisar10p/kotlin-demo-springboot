@@ -1,12 +1,11 @@
 package com.codesession.demo.demo.feature_todo.service
 
+import com.codesession.demo.demo.commons.createCompletedPredicate
 import com.codesession.demo.demo.feature_todo.extensions.countWithPredicate
 import com.codesession.demo.demo.feature_todo.extensions.findAllWithPredicate
 import com.codesession.demo.demo.feature_todo.extensions.findAllWithSorting
 import com.codesession.demo.demo.feature_todo.model.TodoTask
 import com.codesession.demo.demo.feature_todo.repository.TodoTaskRepository
-import com.codesession.demo.demo.commons.createCompletedPredicate
-import com.codesession.demo.demo.commons.nonNull
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Sort
 import org.springframework.stereotype.Service
@@ -22,22 +21,19 @@ class TodoTaskService @Autowired constructor(
     private val entityManager: EntityManager
 ) {
 
-    fun getAllTasks(sortBy: String?, filterBy: String?): List<TodoTask> {
+    fun getAllTasks(sortBy: String?, filterBy: String?): Result<List<TodoTask>> {
         val sort = sortBy?.let { Sort.by(it) } ?: Sort.by("id")
         val predicate = filterBy?.let { parseFilter(it) }
 
-        predicate.nonNull {
-            return entityManager.findAllWithPredicate(this)
-        }
-        return repository.findAllWithSorting(sort)
+        return predicate?.let { entityManager.findAllWithPredicate(it) }
+            ?: Result.success(repository.findAllWithSorting(sort))
     }
 
-    fun countTasks(filterBy: String?): Long {
+    fun countTasks(filterBy: String?): Result<Long> {
         val predicate = filterBy?.let { parseFilter(it) }
-        predicate.nonNull {
-            return entityManager.countWithPredicate(this)
-        }
-        return repository.count()
+
+        return predicate?.let { entityManager.countWithPredicate(it) }
+            ?: Result.success(repository.count())
     }
 
     fun getTaskById(id: Long): TodoTask? = repository.findById(id).orElse(null)
@@ -45,7 +41,6 @@ class TodoTaskService @Autowired constructor(
     fun save(task: TodoTask) = repository.save(task)
 
     fun deleteById(id: Long) = repository.deleteById(id)
-
 
     private fun parseFilter(filter: String): Predicate? {
         val criteria = filter.split(",").map { it.split("=") }.associate { it[0] to it[1] }
@@ -66,5 +61,4 @@ class TodoTaskService @Autowired constructor(
 
         return predicate
     }
-
 }

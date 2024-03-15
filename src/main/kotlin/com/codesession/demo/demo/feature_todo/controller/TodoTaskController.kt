@@ -13,14 +13,14 @@ class TodoTaskController @Autowired constructor(private val service: TodoTaskSer
     fun getAllTasks(
         @RequestParam(required = false) sortBy: String?,
         @RequestParam(required = false) filterBy: String?
-    ): List<TodoTask> {
+    ): Result<List<TodoTask>> {
         return service.getAllTasks(sortBy, filterBy)
     }
 
     @GetMapping("/count")
     fun countTasks(
         @RequestParam(required = false) filterBy: String?
-    ): Long {
+    ): Result<Long> {
         return service.countTasks(filterBy)
     }
 
