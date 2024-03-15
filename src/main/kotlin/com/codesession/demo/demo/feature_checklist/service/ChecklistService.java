@@ -1,5 +1,6 @@
 package com.codesession.demo.demo.feature_checklist.service;
 
+import com.codesession.demo.demo.feature_checklist.extensions.ChecklistRepositoryExtensionsKt;
 import com.codesession.demo.demo.feature_checklist.model.Checklist;
 import com.codesession.demo.demo.feature_checklist.repository.ChecklistRepository;
 import org.springframework.stereotype.Service;
@@ -24,11 +25,11 @@ public class ChecklistService {
 
     public Checklist updateChecklist(Long id, Checklist checklist) {
         Checklist updatedChecklist = checklist.withId(id);
-        return repository.save(updatedChecklist);
+        return ChecklistRepositoryExtensionsKt.updateChecklistById(repository,id,updatedChecklist);
     }
 
     public void deleteChecklist(Long id) {
-        repository.deleteById(id);
+        ChecklistRepositoryExtensionsKt.deleteChecklistById(repository, id);
     }
 }
 
