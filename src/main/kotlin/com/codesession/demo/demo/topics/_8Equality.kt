@@ -23,4 +23,3 @@ fun main() {
     println("person1 == person2: ${person1 == person2}") // Prints true
 }
 
-data class Person(val name: String, val age: Int)
