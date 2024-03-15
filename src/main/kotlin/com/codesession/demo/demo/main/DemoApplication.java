@@ -1,4 +1,4 @@
-package com.codesession.demo.demo;
+package com.codesession.demo.demo.main;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
