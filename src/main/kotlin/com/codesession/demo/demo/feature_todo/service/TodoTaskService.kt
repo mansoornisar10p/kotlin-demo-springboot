@@ -17,7 +17,7 @@ import javax.persistence.criteria.Predicate
 import javax.persistence.criteria.Root
 
 @Service
-class TodoTaskServiceImpl @Autowired constructor(
+class TodoTaskService @Autowired constructor(
     private val repository: TodoTaskRepository,
     private val entityManager: EntityManager
 ) {
